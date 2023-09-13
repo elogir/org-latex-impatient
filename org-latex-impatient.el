@@ -112,6 +112,8 @@
     map)
   "Keymap for reading input.")
 
+(defvar org-latex-impatient-ignore-headers "Ignore all headers" nil)
+
 (defvar org-latex-impatient--process nil)
 (defvar org-latex-impatient--timer nil)
 (defvar-local org-latex-impatient--last-tex-string nil)
@@ -322,7 +324,8 @@ available in upstream."
 
 (defun org-latex-impatient--get-headers ()
   "Return a string of headers."
-  (cond ((derived-mode-p 'org-mode)
+  (cond (org-latex-impatient-ignore-headers "")
+        ((derived-mode-p 'org-mode)
          (plist-get (org-export-get-environment
                      (org-export-get-backend 'latex))
                     :latex-header))
